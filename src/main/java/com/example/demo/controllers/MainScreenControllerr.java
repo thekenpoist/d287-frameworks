@@ -54,8 +54,4 @@ public class MainScreenControllerr {
         return "mainscreen";
     }
 
-    @GetMapping("/about") //look into this
-    public String about() {
-        return "about";
-    }
 }
