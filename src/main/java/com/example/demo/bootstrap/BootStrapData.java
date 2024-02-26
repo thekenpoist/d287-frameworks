@@ -1,5 +1,6 @@
 package com.example.demo.bootstrap;
 
+import com.example.demo.domain.InhousePart;
 import com.example.demo.domain.OutsourcedPart;
 import com.example.demo.domain.Part;
 import com.example.demo.domain.Product;
@@ -66,6 +67,75 @@ public class BootStrapData implements CommandLineRunner {
         productRepository.save(bicycle);
         productRepository.save(unicycle);
         */
+        
+        
+        //Inserted code for Part E starts here
+        if (productRepository.count() == 0) { //load product inventory only of no inventory is present
+           
+            Product trail = new Product("Trail Saddle",2399.99,5);
+            Product cut = new Product("Cutting Saddle",3700.00,5);
+            Product rope = new Product("Roping Saddle",2985.00,5);
+            Product show = new Product("Show Saddle", 6399.00,5);
+            Product english = new Product("English Saddle",1999.00,5);
+
+            productRepository.save(trail);
+            productRepository.save(cut);
+            productRepository.save(rope);
+            productRepository.save(show);
+            productRepository.save(english);
+           
+        }
+        else {
+            System.out.println("Product inventory already present. No additions made.");
+        }
+
+        if (partRepository.count() == 0) { //load part inventory only if no inventory is present
+
+            InhousePart bag = new InhousePart();
+            bag.setName("Saddle Bags");
+            bag.setPrice(239.99);
+            bag.setInv(10);
+            bag.setId(101);
+
+            InhousePart cinch = new InhousePart();
+            cinch.setName("Front Cinch");
+            cinch.setPrice(37.99);
+            cinch.setInv(10);
+            cinch.setId(102);
+
+            InhousePart strap = new InhousePart();
+            strap.setName("Bucking Strap");
+            strap.setPrice(79.99);
+            strap.setInv(10);
+            strap.setId(103);
+
+            InhousePart head = new InhousePart();
+            head.setName("Head Stall");
+            head.setPrice(107.99);
+            head.setInv(10);
+            head.setId(104);
+
+            InhousePart rein = new InhousePart();
+            rein.setName("Leather Reins");
+            rein.setPrice(65.00);
+            rein.setInv(10);
+            rein.setId(105);
+
+            partRepository.save(bag);
+            partRepository.save(cinch);
+            partRepository.save(strap);
+            partRepository.save(head);
+            partRepository.save(rein);
+
+        }
+        else {
+            System.out.println("Part inventory already present. No additions made.");
+        }
+
+
+
+
+
 
         System.out.println("Started in Bootstrap");
         System.out.println("Number of Products"+productRepository.count());
