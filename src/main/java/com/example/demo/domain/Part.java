@@ -4,6 +4,7 @@ import com.example.demo.validators.ValidDeletePart;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Max;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +29,11 @@ public abstract class Part implements Serializable {
     double price;
     @Min(value = 0, message = "Inventory value must be positive")
     int inv;
+    
+    @Min(value = 0, message = "Minimum inventory value must be positive")
+    int minInv;
+    @Max(value = 25, message = "Maximum inventory must be less than 25")
+    int maxInv;
 
     @ManyToMany
     @JoinTable(name="product_part", joinColumns = @JoinColumn(name="part_id"),
@@ -48,6 +54,26 @@ public abstract class Part implements Serializable {
         this.name = name;
         this.price = price;
         this.inv = inv;
+    }
+
+    public Part(long id, String name, double price, int inv, int minInv, int maxInv) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.inv = inv;
+        this.minInv = minInv;
+        this.maxInv = maxInv;
+    }
+
+    public void verifyMinMaxInventory() {
+        //if inventory is less than minimum inventory, set inventory to the minimum
+        if (this.inv < this.minInv) {
+            this.inv = this.minInv;
+        }
+        //else if inventory is more than the maximum inventory, set inventory to the maximum
+        else if (this.inv > maxInv) {
+            this.inv = this.maxInv;
+        }
     }
 
     public long getId() {
@@ -80,6 +106,22 @@ public abstract class Part implements Serializable {
 
     public void setInv(int inv) {
         this.inv = inv;
+    }
+   
+    public int getMinInv() {
+        return minInv;
+    }
+
+    public void setMinInv(int minInv) {
+        this.minInv = minInv;
+    }
+
+    public int getMaxInv() {
+        return maxInv;
+    }
+
+    public void setMaxInv(int maxInv) {
+        this.maxInv = maxInv;
     }
 
     public Set<Product> getProducts() {

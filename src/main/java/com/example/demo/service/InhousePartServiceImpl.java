@@ -51,6 +51,8 @@ public class InhousePartServiceImpl implements InhousePartService {
 
     @Override
     public void save(InhousePart thePart) {
+        //verify inventory is set between the minimum or maximum
+        thePart.verifyMinMaxInventory(); 
         partRepository.save(thePart);
 
     }
@@ -62,3 +64,4 @@ public class InhousePartServiceImpl implements InhousePartService {
     }
 
 }
+

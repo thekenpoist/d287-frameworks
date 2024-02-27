@@ -94,32 +94,37 @@ public class BootStrapData implements CommandLineRunner {
             InhousePart bag = new InhousePart();
             bag.setName("Saddle Bags");
             bag.setPrice(239.99);
-            bag.setInv(10);
-            bag.setId(101);
+            bag.setInv(5);
+            bag.setMinInv(2);
+            bag.setMaxInv(7);
 
             InhousePart cinch = new InhousePart();
             cinch.setName("Front Cinch");
             cinch.setPrice(37.99);
-            cinch.setInv(10);
-            cinch.setId(102);
+            cinch.setInv(5);
+            cinch.setMinInv(2);
+            cinch.setMaxInv(7);
 
             InhousePart strap = new InhousePart();
             strap.setName("Bucking Strap");
             strap.setPrice(79.99);
-            strap.setInv(10);
-            strap.setId(103);
+            strap.setInv(5);
+            strap.setMinInv(2);
+            strap.setMaxInv(7);
 
             InhousePart head = new InhousePart();
             head.setName("Head Stall");
             head.setPrice(107.99);
-            head.setInv(10);
-            head.setId(104);
+            head.setInv(5);
+            head.setMinInv(2);
+            head.setMaxInv(7);
 
             InhousePart rein = new InhousePart();
             rein.setName("Leather Reins");
             rein.setPrice(65.00);
-            rein.setInv(10);
-            rein.setId(105);
+            rein.setInv(5);
+            rein.setMinInv(2);
+            rein.setMaxInv(7);
 
             partRepository.save(bag);
             partRepository.save(cinch);

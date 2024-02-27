@@ -49,6 +49,8 @@ public class OutsourcedPartServiceImpl implements OutsourcedPartService{
 
     @Override
     public void save(OutsourcedPart thePart) {
+        //verify inventory is set between the minimum or maximum
+        thePart.verifyMinMaxInventory(); 
         partRepository.save(thePart);
 
     }
