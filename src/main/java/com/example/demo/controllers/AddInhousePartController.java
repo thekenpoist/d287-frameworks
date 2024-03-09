@@ -25,30 +25,38 @@ import javax.validation.Valid;
  *
  */
 @Controller
-public class AddInhousePartController{
+public class AddInhousePartController {
     @Autowired
     private ApplicationContext context;
 
     @GetMapping("/showFormAddInPart")
-    public String showFormAddInhousePart(Model theModel){
-        InhousePart inhousepart=new InhousePart();
-        theModel.addAttribute("inhousepart",inhousepart);
+    public String showFormAddInhousePart(Model theModel) {
+        InhousePart inhousepart = new InhousePart();
+        theModel.addAttribute("inhousepart", inhousepart);
         return "InhousePartForm";
     }
 
     @PostMapping("/showFormAddInPart")
-    public String submitForm(@Valid @ModelAttribute("inhousepart") InhousePart part, BindingResult theBindingResult, Model theModel){
-        theModel.addAttribute("inhousepart",part);
-        if(theBindingResult.hasErrors()){
+    public String submitForm(@Valid @ModelAttribute("inhousepart") InhousePart part, BindingResult bindingResult,
+            Model theModel) {
+        theModel.addAttribute("inhousepart", part);
+        if (part.getInv() > part.getMaxInv()) {
+            bindingResult.rejectValue("inv", "maxError", "Part inventory excedes maximum.");
             return "InhousePartForm";
-        }
-        else{
-        InhousePartService repo=context.getBean(InhousePartServiceImpl.class);
-        InhousePart ip=repo.findById((int)part.getId());
-        if(ip!=null)part.setProducts(ip.getProducts());
+        } else if (part.getInv() < part.getMinInv()) {
+            bindingResult.rejectValue("inv", "minError", "Part inventory below minimum.");
+            return "InhousePartForm";
+        } else if (bindingResult.hasErrors()) {
+            return "InhousePartForm";
+        } else {
+            InhousePartService repo = context.getBean(InhousePartServiceImpl.class);
+            InhousePart ip = repo.findById((int) part.getId());
+            if (ip != null)
+                part.setProducts(ip.getProducts());
             repo.save(part);
 
-        return "confirmationaddpart";}
+            return "confirmationaddpart";
+        }
     }
 
 }

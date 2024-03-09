@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import com.example.demo.validators.ValidEnufParts;
+import com.example.demo.validators.ValidLowParts;
 import com.example.demo.validators.ValidProductPrice;
 
 import javax.persistence.*;
@@ -16,8 +17,9 @@ import java.util.Set;
  *
  */
 @Entity
-@Table(name="Products")
+@Table(name = "Products")
 @ValidProductPrice
+@ValidLowParts
 @ValidEnufParts
 public class Product implements Serializable {
     @Id
@@ -28,8 +30,8 @@ public class Product implements Serializable {
     double price;
     @Min(value = 0, message = "Inventory value must be positive")
     int inv;
-    @ManyToMany(cascade=CascadeType.ALL, mappedBy = "products")
-    Set<Part> parts= new HashSet<>();
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "products")
+    Set<Part> parts = new HashSet<>();
 
     public Product() {
     }
@@ -87,13 +89,16 @@ public class Product implements Serializable {
         this.parts = parts;
     }
 
-    public String toString(){
+    public String toString() {
         return this.name;
     }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Product product = (Product) o;
 
@@ -104,4 +109,5 @@ public class Product implements Serializable {
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
     }
+
 }

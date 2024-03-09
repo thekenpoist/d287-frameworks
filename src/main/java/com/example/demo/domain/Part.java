@@ -12,14 +12,14 @@ import java.util.Set;
 /**
  *
  *
- *
+ 
  *
  */
 @Entity
-@ValidDeletePart
+// @ValidDeletePart
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="part_type",discriminatorType = DiscriminatorType.INTEGER)
-@Table(name="Parts")
+@DiscriminatorColumn(name = "part_type", discriminatorType = DiscriminatorType.INTEGER)
+@Table(name = "Parts")
 public abstract class Part implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,16 +29,15 @@ public abstract class Part implements Serializable {
     double price;
     @Min(value = 0, message = "Inventory value must be positive")
     int inv;
-    
-    @Min(value = 0, message = "Minimum inventory value must be positive")
+
+    @Min(value = 1, message = "Minimum inventory must greater than 0")
     int minInv;
-    @Max(value = 25, message = "Maximum inventory must be less than 25")
+    @Max(value = 100, message = "Maximum inventory must be less than 100")
     int maxInv;
 
     @ManyToMany
-    @JoinTable(name="product_part", joinColumns = @JoinColumn(name="part_id"),
-            inverseJoinColumns=@JoinColumn(name="product_id"))
-    Set<Product> products= new HashSet<>();
+    @JoinTable(name = "product_part", joinColumns = @JoinColumn(name = "part_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+    Set<Product> products = new HashSet<>();
 
     public Part() {
     }
@@ -66,11 +65,12 @@ public abstract class Part implements Serializable {
     }
 
     public void verifyMinMaxInventory() {
-        //if inventory is less than minimum inventory, set inventory to the minimum
+        // if inventory is less than minimum inventory, set inventory to the minimum
         if (this.inv < this.minInv) {
             this.inv = this.minInv;
         }
-        //else if inventory is more than the maximum inventory, set inventory to the maximum
+        // else if inventory is more than the maximum inventory, set inventory to the
+        // maximum
         else if (this.inv > maxInv) {
             this.inv = this.maxInv;
         }
@@ -107,7 +107,7 @@ public abstract class Part implements Serializable {
     public void setInv(int inv) {
         this.inv = inv;
     }
-   
+
     public int getMinInv() {
         return minInv;
     }
@@ -132,13 +132,16 @@ public abstract class Part implements Serializable {
         this.products = products;
     }
 
-    public String toString(){
+    public String toString() {
         return this.name;
     }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Part part = (Part) o;
 

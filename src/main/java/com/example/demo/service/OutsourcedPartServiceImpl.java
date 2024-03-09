@@ -15,7 +15,7 @@ import java.util.Optional;
  *
  */
 @Service
-public class OutsourcedPartServiceImpl implements OutsourcedPartService{
+public class OutsourcedPartServiceImpl implements OutsourcedPartService {
     private OutsourcedPartRepository partRepository;
 
     @Autowired
@@ -30,17 +30,16 @@ public class OutsourcedPartServiceImpl implements OutsourcedPartService{
 
     @Override
     public OutsourcedPart findById(int theId) {
-        Long theIdl=(long)theId;
+        Long theIdl = (long) theId;
         Optional<OutsourcedPart> result = partRepository.findById(theIdl);
 
         OutsourcedPart thePart = null;
 
         if (result.isPresent()) {
             thePart = result.get();
-        }
-        else {
+        } else {
             // we didn't find the OutSourced id
-            //throw new RuntimeException("Did not find part id - " + theId);
+            // throw new RuntimeException("Did not find part id - " + theId);
             return null;
         }
 
@@ -49,15 +48,15 @@ public class OutsourcedPartServiceImpl implements OutsourcedPartService{
 
     @Override
     public void save(OutsourcedPart thePart) {
-        //verify inventory is set between the minimum or maximum
-        thePart.verifyMinMaxInventory(); 
+        // verify inventory is set between the minimum or maximum
+        thePart.verifyMinMaxInventory();
         partRepository.save(thePart);
 
     }
 
     @Override
     public void deleteById(int theId) {
-        Long theIdl=(long)theId;
+        Long theIdl = (long) theId;
         partRepository.deleteById(theIdl);
     }
 

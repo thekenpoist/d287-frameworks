@@ -32,17 +32,16 @@ public class InhousePartServiceImpl implements InhousePartService {
 
     @Override
     public InhousePart findById(int theId) {
-        Long theIdl=(long)theId;
+        Long theIdl = (long) theId;
         Optional<InhousePart> result = partRepository.findById(theIdl);
 
         InhousePart thePart = null;
 
         if (result.isPresent()) {
             thePart = result.get();
-        }
-        else {
+        } else {
             // we didn't find the InhousePart id
-            //throw new RuntimeException("Did not find part id - " + theId);
+            // throw new RuntimeException("Did not find part id - " + theId);
             return null;
         }
 
@@ -51,17 +50,16 @@ public class InhousePartServiceImpl implements InhousePartService {
 
     @Override
     public void save(InhousePart thePart) {
-        //verify inventory is set between the minimum or maximum
-        thePart.verifyMinMaxInventory(); 
+        // verify inventory is set between the minimum or maximum
+        thePart.verifyMinMaxInventory();
         partRepository.save(thePart);
 
     }
 
     @Override
     public void deleteById(int theId) {
-        Long theIdl=(long)theId;
+        Long theIdl = (long) theId;
         partRepository.deleteById(theIdl);
     }
 
 }
-

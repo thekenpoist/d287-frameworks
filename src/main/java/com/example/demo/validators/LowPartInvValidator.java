@@ -16,13 +16,13 @@ import javax.validation.ConstraintValidatorContext;
  *
  *
  */
-public class EnufPartsValidator implements ConstraintValidator<ValidEnufParts, Product> {
+public class LowPartInvValidator implements ConstraintValidator<ValidLowParts, Product> {
     @Autowired
     private ApplicationContext context;
     public static ApplicationContext myContext;
 
     @Override
-    public void initialize(ValidEnufParts constraintAnnotation) {
+    public void initialize(ValidLowParts constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
@@ -36,7 +36,7 @@ public class EnufPartsValidator implements ConstraintValidator<ValidEnufParts, P
         if (product.getId() != 0) {
             Product myProduct = repo.findById((int) product.getId());
             for (Part p : myProduct.getParts()) {
-                if (p.getInv() < (product.getInv() - myProduct.getInv())) {
+                if (((product.getInv() - myProduct.getInv()) > (p.getInv()) - p.getMinInv())) {
                     return false;
                 }
             }
